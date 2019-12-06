@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // Mark: - Set up Google Map Service -
-        GMSServices.provideAPIKey("YOUR-KEY")
+        GMSServices.provideAPIKey("AIzaSyA0N-moLlT1k1JySACvKu1WiCCFaUsbtOY")
         
         return true
     }
