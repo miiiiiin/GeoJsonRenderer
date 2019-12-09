@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2F02F3B987707C2830FD849D /* Pods_GeoJsonRenderer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5251F442C37DB8B5CF69A6 /* Pods_GeoJsonRenderer.framework */; };
 		7D4EC97C239A3E2A0001A03A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4EC97B239A3E2A0001A03A /* MapViewController.swift */; };
+		7D4EC982239DD8E10001A03A /* GeoJSON_sample.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 7D4EC981239DD8E10001A03A /* GeoJSON_sample.geojson */; };
 		7D67B4432398926A00D9497C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D67B4422398926A00D9497C /* AppDelegate.swift */; };
 		7D67B4482398926A00D9497C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D67B4462398926A00D9497C /* Main.storyboard */; };
 		7D67B44A2398926C00D9497C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D67B4492398926C00D9497C /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 		2DEDD20536F39F84029C8566 /* Pods-GeoJsonRenderer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeoJsonRenderer.release.xcconfig"; path = "Target Support Files/Pods-GeoJsonRenderer/Pods-GeoJsonRenderer.release.xcconfig"; sourceTree = "<group>"; };
 		40639871B987E8E391813415 /* Pods-GeoJsonRenderer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeoJsonRenderer.debug.xcconfig"; path = "Target Support Files/Pods-GeoJsonRenderer/Pods-GeoJsonRenderer.debug.xcconfig"; sourceTree = "<group>"; };
 		7D4EC97B239A3E2A0001A03A /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		7D4EC981239DD8E10001A03A /* GeoJSON_sample.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = GeoJSON_sample.geojson; sourceTree = "<group>"; };
 		7D67B43F2398926A00D9497C /* GeoJsonRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeoJsonRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D67B4422398926A00D9497C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7D67B4472398926A00D9497C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				7D67B4462398926A00D9497C /* Main.storyboard */,
 				7D67B4492398926C00D9497C /* Assets.xcassets */,
 				7D67B44B2398926C00D9497C /* LaunchScreen.storyboard */,
+				7D4EC981239DD8E10001A03A /* GeoJSON_sample.geojson */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				7D67B44D2398926C00D9497C /* LaunchScreen.storyboard in Resources */,
 				7D67B44A2398926C00D9497C /* Assets.xcassets in Resources */,
 				7D67B4482398926A00D9497C /* Main.storyboard in Resources */,
+				7D4EC982239DD8E10001A03A /* GeoJSON_sample.geojson in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,8 +13,14 @@ import CoreLocation
 class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: GMSMapView!
+    
     var manager: CLLocationManager!
     var userLoc: CLLocationCoordinate2D!
+    fileprivate var googleMapGroupServiceZoneOverlays: [GMSPolygon]?
+    fileprivate var googleMapGroupServiceZoneVisibleBounds: GMSCoordinateBounds?
+    var polygonPaths: [GMSPath] = []
+    var polygon: GMSPolygon!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +33,49 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.initLocationManager()
+        self.getPath()
+    }
+    
+    
+    private func getPath() {
+        let path = Bundle.main.path(forResource: "GeoJSON_sample", ofType: "geojson")
+        let geoJsonString = path
+        
+        print("jsonstring : \(path)")
+        
+        self.configureRoute(geoJsonString)
+        
+    }
+    
+    fileprivate func configureRoute(_ geoJSONString: String?) {
+        self.googleMapGroupServiceZoneOverlays?.forEach({ overlay in
+            overlay.map = nil
+        })
+        self.googleMapGroupServiceZoneOverlays = nil
+        self.googleMapGroupServiceZoneVisibleBounds = nil
+        
+        guard let geoJSONString = geoJSONString, let polygons = GMSPolygon.polygons(geoJSONString), let mapView = self.mapView else {
+            return
+        }
+        
+        for polygon in polygons {
+            self.polygon = polygon
+            
+            if let path = polygon.path {
+                self.polygonPaths.append(path)
+            }
+            
+            polygon.holes = self.polygonPaths
+            
+            for path in self.polygonPaths {
+                let line = GMSPolyline(path: path)
+                line.map = mapView
+                line.zIndex = 0
+                line.strokeColor = UIColor.gray
+                line.strokeWidth = 3
+            }
+        }
+        self.googleMapGroupServiceZoneOverlays = polygons
     }
     
     private func initLocationManager() {
