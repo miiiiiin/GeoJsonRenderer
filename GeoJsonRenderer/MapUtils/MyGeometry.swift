@@ -13,6 +13,11 @@ class MyGeometry: GeoJSON {
     public var type: String!
     public var coordinates: [[[CLLocationCoordinate2D]]]!
     
+    init(type: String, coordinates: [[[CLLocationCoordinate2D]]]) {
+        self.type = type
+        self.coordinates = coordinates
+    }
+    
     public var mpList: [Polygon]!
     
     //    init() {

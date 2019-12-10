@@ -9,6 +9,7 @@
 import UIKit
 import GoogleMaps
 import CoreLocation
+import ObjectMapper
 
 class MapViewController: UIViewController {
     
@@ -20,7 +21,6 @@ class MapViewController: UIViewController {
     fileprivate var googleMapGroupServiceZoneVisibleBounds: GMSCoordinateBounds?
     var polygonPaths: [GMSPath] = []
     var polygon: GMSPolygon!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,13 +38,38 @@ class MapViewController: UIViewController {
     
     
     private func getPath() {
-        let path = Bundle.main.path(forResource: "GeoJSON_sample", ofType: "geojson")
-        let geoJsonString = path
+        var features = [[String: AnyObject]]()
         
-        print("jsonstring : \(path)")
+        if let path = Bundle.main.path(forResource: "GeoJSON_sample", ofType: "geojson") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
+                
+                let object: AnyObject = try JSONSerialization.jsonObject(with: data as Data, options: .allowFragments) as AnyObject
+                guard let dictionary = object as? [String: AnyObject] else { return }
+                
+                features = dictionary["features"] as! [[String: AnyObject]]
+                
+            } catch let error {
+                print("parse error: \(error.localizedDescription)")
+            }
+        } else {
+            print("Invalid filename/path.")
+        }
+      
         
-        self.configureRoute(geoJsonString)
+        var geometries = [[String: AnyObject]]()
         
+        for feature in features {
+            geometries.append(feature["geometry"] as! [String : AnyObject])
+            
+        }
+        
+        
+        geometries.forEach { geometry in
+            let geojsonstring = geometry.jsonString()
+            print("geojsonstring : \(geojsonstring)")
+            self.configureRoute(geojsonstring)
+        }
     }
     
     fileprivate func configureRoute(_ geoJSONString: String?) {
@@ -71,7 +96,7 @@ class MapViewController: UIViewController {
                 let line = GMSPolyline(path: path)
                 line.map = mapView
                 line.zIndex = 0
-                line.strokeColor = UIColor.gray
+                line.strokeColor = UIColor.red
                 line.strokeWidth = 3
             }
         }
@@ -125,5 +150,16 @@ extension MapViewController: CLLocationManagerDelegate {
             print("new loc : \(location)")
             manager.stopUpdatingLocation()
         }
+    }
+}
+
+extension Dictionary {
+    
+    func jsonString() -> String? {
+        let jsonData = try? JSONSerialization.data(withJSONObject: self, options: [])
+        guard jsonData != nil else {return nil}
+        let jsonString = String(data: jsonData!, encoding: .utf8)
+        guard jsonString != nil else {return nil}
+        return jsonString! as String
     }
 }
