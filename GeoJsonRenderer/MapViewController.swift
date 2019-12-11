@@ -64,12 +64,12 @@ class MapViewController: UIViewController {
             
         }
         
-        
         geometries.forEach { geometry in
             let geojsonstring = geometry.jsonString()
-            print("geojsonstring : \(geojsonstring)")
             self.configureRoute(geojsonstring)
         }
+        
+        self.createOuterBounds(mapView: self.mapView, polygonPaths: self.polygonPaths)
     }
     
     fileprivate func configureRoute(_ geoJSONString: String?) {
@@ -95,10 +95,18 @@ class MapViewController: UIViewController {
             for path in self.polygonPaths {
                 let line = GMSPolyline(path: path)
                 line.map = mapView
-                line.zIndex = 0
-                line.strokeColor = UIColor.red
+                line.zIndex = 1
+                line.strokeColor = UIColor.gray
                 line.strokeWidth = 3
             }
+            
+//            for path in self.polygonPaths {
+//                let option = GMSPolygon(path: path)
+//                option.fillColor = UIColor.black.withAlphaComponent(0.6)
+//                option.zIndex = 0
+//                option.map = mapView
+//                option.holes =
+//            }
         }
         self.googleMapGroupServiceZoneOverlays = polygons
     }
@@ -117,6 +125,27 @@ class MapViewController: UIViewController {
         } else {
             manager.requestWhenInUseAuthorization()
         }
+    }
+    
+    func createOuterBounds(mapView: GMSMapView, polygonPaths: [GMSPath]) {
+        let delta: Float = 0.01
+        
+        let outerBoundsPath = GMSMutablePath()
+        outerBoundsPath.add(CLLocationCoordinate2D(latitude: CLLocationDegrees(-90 - delta), longitude: CLLocationDegrees(180+delta)))
+        outerBoundsPath.add(CLLocationCoordinate2D(latitude: 0, longitude: CLLocationDegrees(180 + delta)))
+        outerBoundsPath.add(CLLocationCoordinate2D(latitude: CLLocationDegrees(90 + delta), longitude: CLLocationDegrees(180 + delta)))
+        outerBoundsPath.add(CLLocationCoordinate2D(latitude: CLLocationDegrees(90 + delta), longitude: 0))
+        outerBoundsPath.add(CLLocationCoordinate2D(latitude: CLLocationDegrees(90 + delta), longitude: CLLocationDegrees(-180-delta)))
+        outerBoundsPath.add(CLLocationCoordinate2D(latitude: 0, longitude: CLLocationDegrees(-180 + delta)))
+        outerBoundsPath.add(CLLocationCoordinate2D(latitude: CLLocationDegrees(-90 - delta), longitude: CLLocationDegrees(-180 - delta)))
+        outerBoundsPath.add(CLLocationCoordinate2D(latitude: CLLocationDegrees(-90 - delta), longitude: 0))
+        outerBoundsPath.add(CLLocationCoordinate2D(latitude: CLLocationDegrees(-90 - delta), longitude: CLLocationDegrees(180 + delta)))
+        
+        let polygonOptions = GMSPolygon(path: outerBoundsPath)
+        polygonOptions.fillColor = UIColor.black.withAlphaComponent(0.6)
+        polygonOptions.zIndex = 0
+        polygonOptions.map = mapView
+        polygonOptions.holes = polygonPaths
     }
 }
 

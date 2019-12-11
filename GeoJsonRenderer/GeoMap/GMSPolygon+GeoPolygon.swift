@@ -47,11 +47,11 @@ extension GMSPolygon {
         guard let geoJSONObject = geoJSONString.toGeoJSONObject(json: geoJSONString) else {
             return nil
         }
-        
-        if let geoPolygon = geoJSONObject as? GMSPath {
-            let polygon = GMSPolygon(path: geoPolygon)
+
+        if let geoPolygon = geoJSONObject as? GeoPolygon, let polygon = GMSPolygon(geoPolygon: geoPolygon) {
             return [polygon]
         }
+            
         else if let geoMultiPolygon = geoJSONObject as? GeoMultiPolygon {
             return GMSPolygon.polygons(geoMultiPolygon)
         }
