@@ -128,12 +128,12 @@ public struct GeoPolygon: GeoJSON, Mappable {
     public init(coordinates: [[CLLocationCoordinate2D]]) {
         self.coordinates = coordinates
         
-        var outerList: [CLLocationCoordinate2D] = coordinates[0]
+        let outerList: [CLLocationCoordinate2D] = coordinates[0]
         for point in outerList {
             self.outer.append(point)
         }
         for i in 1..<coordinates.count {
-            var innerList = coordinates[i]
+            let innerList = coordinates[i]
             for point in innerList {
                 self.inner.append(point)
             }
@@ -198,15 +198,15 @@ public struct GeoMultiPolygon: GeoJSON, Mappable {
     
     public func getMultiPolygon() -> [GeoPolygon] {
         if (self.isMultiPolygon()) {
-            var coordinates = self.coordinates as! [[[CLLocationCoordinate2D]]]
+            let coordinates = self.coordinates as! [[[CLLocationCoordinate2D]]]
             
             for polygon in coordinates {
-                var pg = GeoPolygon(coordinates: polygon)//Polygon(points: polygon)
+                let pg = GeoPolygon(coordinates: polygon)//Polygon(points: polygon)
                 //                self.polygons.append(pg)
             }
         } else if (self.isPolygon()) {
-            var coordinates = self.coordinates as! [[CLLocationCoordinate2D]]
-            var pg = GeoPolygon(coordinates: coordinates)
+            let coordinates = self.coordinates as! [[CLLocationCoordinate2D]]
+            let pg = GeoPolygon(coordinates: coordinates)
             //            self.polygons.append(pg)
         } else {
         }

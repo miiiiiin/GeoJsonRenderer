@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Polygon.swift
 //  GeoJsonRenderer
 //
 //  Created by Running Raccoon on 2019/12/05.
@@ -14,21 +14,19 @@ public class Polygon {
     public var inner: [CLLocationCoordinate2D] = []
     
     init(points: [[CLLocationCoordinate2D]]) {
-        var outerList: [[CLLocationCoordinate2D]] = points//[0]
+        let outerList: [[CLLocationCoordinate2D]] = points//[0]
         
         for point in outerList {
-            var mapPoint = CLLocationCoordinate2D(latitude: point[0].latitude, longitude: point[0].latitude)
+            let mapPoint = CLLocationCoordinate2D(latitude: point[0].latitude, longitude: point[0].latitude)
             self.outer.append(mapPoint)
         }
         
         for i in 0..<outerList.count {
-            var innerList = points[i];
+            let innerList = points[i];
             for point in innerList {
-                var mapPoint = CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude)
+                let mapPoint = CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude)
                 self.inner.append(mapPoint)
             }
         }
     }
-    
 }
-
